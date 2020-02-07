@@ -37,9 +37,10 @@ export class RegisterComponent implements OnInit {
       this.registeredUser = this.authService.getCurrentUser();
       this.loggedUser = true;
       this.verifiedUser = this.registeredUser.emailVerified;
-      
+
       //Obter os dados no banco de dados:
       this.userService.userExist({uid: this.registeredUser.uid, email: this.registeredUser.email, verified: this.registeredUser.emailVerified});
+      
     } else {
       this.loggedUser = false;
       this.verifiedUser = false;
