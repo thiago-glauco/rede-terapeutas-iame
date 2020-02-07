@@ -1,7 +1,8 @@
-import 'hammerjs';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+
 
 import {AuthenticationModule} from './authentication/authentication.module';
 import {UserAreaModule} from './user-area/user-area.module';

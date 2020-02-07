@@ -1,7 +1,7 @@
-import "hammerjs";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './register/register.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +24,7 @@ import { AuthRootComponent } from './auth-root/auth-root.component';
 @NgModule({
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     AuthenticationRoutingModule,
     FormsModule,
     MatIconModule,
