@@ -1,0 +1,113 @@
+<p>O registro é composto por 12 questões. </p>
+<mat-vertical-stepper>
+  <mat-step label="crie uma conta">
+
+    <!--This area deals with user loggin and data fields. -->
+    <p>Se você tiver uma conta google, pode utiliza-la para realizar seu registro, em vez de cadastrar um novo usuário e senha</p>
+    <p>Após definir um usuário e senha as suas informações serão salvas em segurança e você poderá retomar o cadastro caso tenha que interromper o processo.</p>
+    <form class="form-space" fxLayout="column" #registerForm="ngForm" >
+    <!--<mat-form-field fxFlex>
+      <input matInput type="text" placeholder="Name" name="userName" [(ngModel)]="loginUser.name" 
+        required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #userName="ngModel">
+        <mat-error *ngIf="userName.touched && userName.invalid">
+          Full Name is required.
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput type="tel" placeholder="Telephone"
+      name="tel" [(ngModel)]="loginUser.tel" #tel="ngModel"
+      required minlength="8" maxlength="15">
+      <mat-error *ngIf="tel.touched && tel.invalid">   
+          A valid phone is required.
+      </mat-error>
+    </mat-form-field>
+      {{tel.valid}} {{tel.dirty}} {{tel.errors | json}}-->
+    <mat-form-field fxFlex>
+      <input matInput type="email" placeholder="ex: joao@provedor.com.br" name="email" [(ngModel)]="loginUser.email" required #email="ngModel">
+      <mat-error *ngIf="email.touched && email.invalid">
+          A valid email is required.
+      </mat-error>
+    </mat-form-field>
+    
+    <!--This area deal with password -->
+    <div class="password" fxFlex fxLayout="column" [fxHide]="loggedUser">
+      <mat-form-field fxFlex>
+        <input matInput 
+        [type]="hidePassword ? 'password' : 'text'" required placeholder="Senha de 6 ou mais caracteres" name="password"
+        [(ngModel)]="loginUser.password" #password="ngModel"  minlength="6" maxlength="8" >
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput 
+        [type]="hidePassword ? 'password' : 'text'" required placeholder="Confirme a senha" name="confirmPassword"
+        [(ngModel)]="loginUser.confirmPassword" minlength="6" maxlength="8" #confirmPassword="ngModel">
+      </mat-form-field>
+      <div>
+        <p class="errorText" [fxHide]='passwordsEqual'>Senha e confirmação de senha estão diferentes</p>
+      </div>
+      <button fxFlex flxAlign="center" mat-raised-button  (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>Exibir Senha
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <button fxFlex flxAlign="center" mat-raised-button [disabled]="!registerForm.valid" [fxHide]="loggedUser"  (click)="createUser()" [attr.aria-label]="'Registrar'">
+      <mat-icon></mat-icon> Registrar
+    </button>
+    <button fxFlex flxAlign="center" [fxHide]="loggedUser" mat-raised-button (click)="createGoogleUser()" [attr.aria-label]="'Registre-se via Google'">
+      <mat-icon>account_box</mat-icon> Registre-se via Google
+    </button>
+    <button fxFlex flxAlign="center" [fxHide]="!loggedUser"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
+      <mat-icon>account_box</mat-icon> Sair
+    </button>
+  </form>
+  </mat-step>
+
+  <mat-step label="dados pessoais">
+    <p>Desculpe, mas precisamos coletar algumas informações pessoais.</p>
+    <form class="personal-data" fxLayout="column" #registerForm="ngForm" >
+    <mat-form-field fxFlex>
+      <input matInput type="text" placeholder="ex: Jorge Luiz da Silva" name="nome" [(ngModel)]="dadosPessoais.nome" required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #nome="ngModel">
+      <mat-error *ngIf="nome.touched && nome.invalid">
+          Por favor, informe seu nome completo.
+      </mat-error>
+    </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput 
+        type="text" placeholder="ex: 40" name="idade" required
+        [(ngModel)]="dadosPessoais.idade" #idade="ngModel"  pattern="^[\d]{1,2}" >
+        <mat-error *ngIf="idade.touched && idade.invalid">
+          Por favor, informe sua idade apenas com dígitos.
+      </mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+      <input matInput 
+        type='text' required placeholder="Ex: 11 99123456" name="celular"
+        [(ngModel)]="dadosPessoais.celular" minlength="6" maxlength="15" #celular="ngModel">
+      </mat-form-field>
+    <mat-form-field fxFlex >
+      <input matInput type="email" placeholder="ex: joao@provedor.com.br" name="email" [(ngModel)]="dadosPessoais.email2"  #email="ngModel">
+      <mat-error>
+          Informe um e-mail de contato, caso desejo ser contatado por um e-mail diferente.
+      </mat-error>
+      <mat-error *ngIf="email.invalid">
+          Informe um email válido.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label for="rg">RG:</label>
+      <input matInput 
+        type='text' required placeholder="Ex: 121739723" name="rg"
+        [(ngModel)]="dadosPessoais.rg" minlength="6" maxlength="15" #rg="ngModel">
+      </mat-form-field>
+    <mat-divider></mat-divider>
+    <button fxFlex flxAlign="center" mat-raised-button [disabled]="!registerForm.valid" [fxHide]="loggedUser"  (click)="createUser()" [attr.aria-label]="'Registrar'">
+      <mat-icon></mat-icon> Registrar
+    </button>
+    <button fxFlex flxAlign="center" [fxHide]="loggedUser" mat-raised-button (click)="createGoogleUser()" [attr.aria-label]="'Registre-se via Google'">
+      <mat-icon>account_box</mat-icon> Registre-se via Google
+    </button>
+    <button fxFlex flxAlign="center" [fxHide]="!loggedUser"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
+      <mat-icon>account_box</mat-icon> Sair
+    </button>
+  </form>
+  </mat-step>
+</mat-vertical-stepper>
