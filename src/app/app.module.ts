@@ -26,7 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AboutComponent } from './about/about.component';
+
 
 
 import {environment} from './environments/environment';
