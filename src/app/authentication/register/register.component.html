@@ -2,6 +2,8 @@
     <!--This area deals with user loggin and data fields. -->
     <p>Se você tiver uma conta google, pode utiliza-la para realizar seu registro, em vez de cadastrar um novo usuário e senha</p>
     <p>Após definir um usuário e senha as suas informações serão salvas em segurança e você poderá retomar o cadastro caso tenha que interromper o processo.</p>
+    <mat-vertical-stepper #stepper>
+      <mat-step label="registro">
     <form class="form-space" fxLayout="column" #registerForm="ngForm" >
     <!--<mat-form-field fxFlex>
       <input matInput type="text" placeholder="Name" name="userName" [(ngModel)]="loginUser.name" 
@@ -19,6 +21,8 @@
       </mat-error>
     </mat-form-field>
       {{tel.valid}} {{tel.dirty}} {{tel.errors | json}}-->
+    
+    
     <mat-form-field fxFlex>
       <input matInput type="email" placeholder="ex: joao@provedor.com.br" name="email" [(ngModel)]="loginUser.email" required #email="ngModel">
       <mat-error *ngIf="email.touched && email.invalid">
@@ -56,9 +60,9 @@
       <mat-icon>account_box</mat-icon> Sair
     </button>
   </form>
-
-  <!--<mat-step label="dados pessoais">
-    <p>Desculpe, mas precisamos coletar algumas informações pessoais.</p>
+  </mat-step>
+  <mat-step label="dados pessoais">
+    <p>Agora precisamos coletar algumas informações pessoais.</p>
     <form class="personal-data" fxLayout="column" #registerForm="ngForm" >
     <mat-form-field fxFlex>
       <input matInput type="text" placeholder="ex: Jorge Luiz da Silva" name="nome" [(ngModel)]="dadosPessoais.nome" required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #nome="ngModel">
@@ -104,4 +108,5 @@
       <mat-icon>account_box</mat-icon> Sair
     </button>
   </form>
-  </mat-step>-->
+  </mat-step>
+  <mat-vertical-stepper>
