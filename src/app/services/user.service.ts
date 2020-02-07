@@ -8,7 +8,7 @@ import {from, Observable, BehaviorSubject} from 'rxjs';
 @Injectable()
 export class UserService {
 
-  private collectionRoot: string = 'users';
+  private collectionRoot: string = 'terapeutas';
   private databaseUsersColection: AngularFirestoreCollection<DatabaseUser[]>;
   private databaseUserDoc: AngularFirestoreDocument<DatabaseUser>;
   private databaseUserData: DatabaseUser;
@@ -20,16 +20,24 @@ export class UserService {
     this.databaseUsersColection = this.afs.collection<DatabaseUser>(this.collectionRoot);
   }
 
-  userExist( userId ) {
+  userExist( user ) {
     let that = this;
-    let userDoc = this.afs.doc<DatabaseUser>(`${this.collectionRoot}/${userId}`);
+    let userDoc = this.afs.doc<DatabaseUser>(`${this.collectionRoot}/${user.uid}`);
     userDoc.valueChanges().subscribe({
       next(data){
         console.log(data)
+        if(!data) {
+          console.log("creating user: ");
+          console.log(user);
+          that.createUser(user);
+        }
         that.userSubject.next(data);
         },
-      error(err) {console.log("usuário não está no bd"); 
-        console.log(err)}
+      error(err) {
+        console.log("usuário não está no bd"); 
+        console.log(err);
+        
+        }
     })
   }
 

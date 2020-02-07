@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     let that = this;
-    this.userService.userExist(this.fbUser.uid);
+    this.userService.userExist(this.fbUser);
     this.userDataObservable.subscribe({
       next(user){
         that.userData = user},

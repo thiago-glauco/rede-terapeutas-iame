@@ -23,6 +23,10 @@ export class RegisterComponent implements OnInit {
   loginUser: LoginFormUser = new LoginFormUser(); //object with user form data
   //loginUser = {};
   registeredUser: firebase.User; //User with data returned from firebase auth service
+
+  //dadso obtidos do serviço user
+  userData: DatabaseUser;
+  userDataObservable: Observable<DatabaseUser>;
   dadosPessoais = {};
 
   constructor(private authService: AuthenticationService,
@@ -30,15 +34,16 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     if( this.authService.hasLoggedUser() ) {
-        this.registeredUser = this.authService.getCurrentUser();
-        this.loggedUser = true;
-        this.verifiedUser = this.registeredUser.emailVerified;
-        console.log(this.verifiedUser);
-        //this.authService.logOut();
-      } else {
-        this.loggedUser = false;
-        this.verifiedUser = false;
-      }
+      this.registeredUser = this.authService.getCurrentUser();
+      this.loggedUser = true;
+      this.verifiedUser = this.registeredUser.emailVerified;
+      
+      //Obter os dados no banco de dados:
+      this.userService.userExist({uid: this.registeredUser.uid, email: this.registeredUser.email, verified: this.registeredUser.emailVerified});
+    } else {
+      this.loggedUser = false;
+      this.verifiedUser = false;
+    }
   }
 
   createUser() { 
@@ -132,6 +137,5 @@ export class RegisterComponent implements OnInit {
     };
     console.log(userData);
       this.userService.createUser(userData);
-   
   }
 }
