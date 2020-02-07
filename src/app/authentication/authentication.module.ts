@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 import {AuthenticationGuard} from '../services/authentication.guard';
@@ -35,7 +35,7 @@ import { AuthRootComponent } from './auth-root/auth-root.component';
     MatDialogModule,
     MatMenuModule,
     MatStepperModule,
-    
+    FlexLayoutModule
   ],
   declarations: [RegisterComponent, LoginComponent, AuthRootComponent],
 })
