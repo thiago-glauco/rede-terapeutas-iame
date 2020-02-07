@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
       this.loggedUser = true;
       this.verifiedUser = this.registeredUser.emailVerified;
 
-      //Obter os dados no banco de dados:
+      //1*Obter os dados no banco de dados ou criar usuário em caso de falha anterior:
       this.userService.userExist({uid: this.registeredUser.uid, email: this.registeredUser.email, verified: this.registeredUser.emailVerified});
       
     } else {
@@ -140,3 +140,13 @@ export class RegisterComponent implements OnInit {
       this.userService.createUser(userData);
   }
 }
+
+//1* Na possibilidade de raros erros de ocorrer a criação do usuário no serviço de 
+//autenticação mas não ocorrer o envio de dados para o banco de dados, situação que 
+//pode ocorrer, por exemplo quando o usuário está conectado via 3g e perde a conexão
+//no meio da operação, desenvolvi o método this.userService.userExist()
+//Este método verifica se o usuário está criado no banco. Caso não esteja
+//ela cria este usuário. Então, userExist verifica se um usuário que deveria
+//existir foi realmente criado, senão o cria baseado nas informações do firebaseauth
+//Uma alternativa mais elegante será desenvolver uma função no firefunctions que
+//corrija estes erros, mas fica para o futuro.
