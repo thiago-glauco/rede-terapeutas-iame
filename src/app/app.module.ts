@@ -57,6 +57,7 @@ import { HelloComponent } from './hello.component';
     FlexLayoutModule
    ],
   declarations: [ AppComponent, HelloComponent ],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ AppComponent ],
+  providers: [UserService, AuthenticationService]
 })
 export class AppModule { }
