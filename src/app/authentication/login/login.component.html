@@ -20,7 +20,7 @@
   <button fxFlex flxAlign="center" [fxHide]="loggedUser" mat-raised-button (click)="googleLogin()" [attr.aria-label]="'Google Login'">
     <mat-icon>account_box</mat-icon> Registre-se via Google
   </button>
-  <button fxFlex flxAlign="center" [fxHide]="!loggedUser"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
+  <button fxFlex flxAlign="center"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
     <mat-icon>account_box</mat-icon> Logout
   </button>
   <button fxFlex flxAlign="center" [fxHide]="loggedUser"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
