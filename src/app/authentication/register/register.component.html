@@ -121,7 +121,7 @@
     <mat-form-field fxFlex>
       <mat-label>Informe um telefone para contato</mat-label>
       <input matInput 
-        type='text' required placeholder="Ex: 11 99123456" name="celular"
+        type='tel' required placeholder="Ex: 11 99123456" name="celular"
         [(ngModel)]="dadosContato.celular" minlength="6" maxlength="15" #celular="ngModel">
       </mat-form-field>
     <mat-form-field fxFlex>
@@ -137,31 +137,32 @@
       <button fxFlex matStepperPrevious  mat-raised-button [attr.aria-label]="'Voltar'">
       <mat-icon>chevron_left</mat-icon> voltar
     </button>
-    <button fxFlex mat-button matStepperNext [disabled]="!dataForm.valid" [attr.aria-label]="'Próximo'" (click)="savePersonalData()">Próximo <mat-icon>chevron_right</mat-icon></button>
+    <button fxFlex mat-button matStepperNext [disabled]="!contatForm.valid" [attr.aria-label]="'Próximo'" (click)="savePersonalData()">Próximo <mat-icon>chevron_right</mat-icon></button>
     </mat-step>
 
     <mat-step label="Informções Profissionais">
-      <form class="form-dados-contato" fxLayout="column" #contatForm="ngForm" >
+      <form class="form-dados-contato" fxLayout="column" #profissionalForm="ngForm" >
         <mat-form-field fxFlex>
-          <mat-label>Informe um telefone para contato</mat-label>
+          <mat-label>Qual tipo de terapia você atua?</mat-label>
           <input matInput 
-            type='text' required placeholder="Ex: 11 99123456" name="celular"
-            [(ngModel)]="dadosContato.celular" minlength="6" maxlength="15" #celular="ngModel">
+            type='text' required name="tipoTerapia"
+            [(ngModel)]="dadosProfissionais.tipoTerapia" 
+            placeholder="ex: Psicoterapia, Terapia Floral, Psicanálise"minlength="2" maxlength="50" #tipoTerapia="ngModel">
           </mat-form-field>
         <mat-form-field fxFlex>
-          <input matInput type="email" placeholder="ex: joao@provedor.com.br" name="emailContato" [(ngModel)]="dadosContato.emailContato"  #emailContato="ngModel">
-          <mat-error>
-              Informe um e-mail de contato, caso desejo ser contatado por um e-mail diferente.
-          </mat-error>
-          <mat-error *ngIf="emailContato.invalid">
-              Informe um email válido.
-          </mat-error>
+          <mat-label>Qual sua disponibilidade para atendimentos online?</mat-label>
+          <input matInput type="text" placeholder="ex: 3 dias da semana, 4 horas por semana..." name="disponibilidade" required [(ngModel)]="dadosProfissionais.disponibilidade"  #disponibilidade="ngModel">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Nos conte um pouco sobre sua experiência. Se for psicorerapeuta informe seu CRP?</mat-label>
+          <input matInput type="textarea" rows="10" cols="100" maxLength="1000" name="disponibilidade" required [(ngModel)]="dadosProfissionais.curriculo"  #curriculo="ngModel">
         </mat-form-field>
        </form>
-           <button fxFlex matStepperPrevious  mat-raised-button [attr.aria-label]="'Voltar'">
-      <mat-icon>chevron_left</mat-icon> voltar
-    </button>
-    <button fxFlex mat-button matStepperNext [disabled]="!dataForm.valid" [attr.aria-label]="'Próximo'" (click)="savePersonalData()">Próximo <mat-icon>chevron_right</mat-icon></button>
+        <button fxFlex matStepperPrevious  mat-raised-button [attr.aria-label]="'Voltar'">
+          <mat-icon>chevron_left</mat-icon>Voltar
+        </button>
+        <button fxFlex mat-button matStepperNext [disabled]="!profissionalForm.valid"
+        [attr.aria-label]="'Próximo'" (click)="savePersonalData()">Próximo <mat-icon>chevron_right</mat-icon></button>
     </mat-step>
   
   </mat-vertical-stepper>
