@@ -153,7 +153,10 @@ export class RegisterComponent implements OnInit {
     let userData: DatabaseUser = {
       uid: this.registeredUser.uid,
       email: this.registeredUser.email,
-      verified: this.registeredUser.emailVerified
+      verified: this.registeredUser.emailVerified,
+      category: "terapeuta",
+      lastSignIn: this.registeredUser.metadata.lastSignInTime,
+      creationTime: this.registeredUser.metadata.creationTime
     };
     console.log(userData);
       this.userService.createUser(userData);
