@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   //loginUser = {};
   registeredUser: firebase.User; //User with data returned from firebase auth service
 
-  //dadso obtidos do serviço user
+  //dados obtidos do serviço user
   userData: DatabaseUser;
   userDataObservable: Observable<DatabaseUser>;
   dadosPessoais = {};
@@ -33,14 +33,21 @@ export class RegisterComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
+    let that = this;
     if( this.authService.hasLoggedUser() ) {
       this.registeredUser = this.authService.getCurrentUser();
       this.loggedUser = true;
       this.verifiedUser = this.registeredUser.emailVerified;
 
       //1*Obter os dados no banco de dados ou criar usuário em caso de falha anterior:
-      this.userService.userExist({uid: this.registeredUser.uid, email: this.registeredUser.email, verified: this.registeredUser.emailVerified});
-      
+      this.userService.userExist({uid: this.registeredUser.uid,
+        email: this.registeredUser.email,
+        verified: this.registeredUser.emailVerified,
+        category: "terapeuta"});
+      this.userDataObservable = this.userService.getDatabaseUser();
+      this.userDataObservable.subscribe( {
+        next(data){ that.loginUser = data;  }
+      })
     } else {
       this.loggedUser = false;
       this.verifiedUser = false;
@@ -138,6 +145,18 @@ export class RegisterComponent implements OnInit {
     };
     console.log(userData);
       this.userService.createUser(userData);
+  }
+
+  private authUserToDatabaseUser( authUser: firebase.User ) {
+      this.loginUser.email = authUser.email;
+
+      this.loginUser.verified = authUser.emailVerified
+
+      this.loginUser.ultimo_acesso = authUser.metadata.lastSignInTime;
+
+      this.loginUser.provedor = authUser.providerId;
+
+      this.loginUser.category = "terapeuta";
   }
 }
 

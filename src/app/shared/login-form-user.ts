@@ -9,11 +9,13 @@ export class LoginFormUser implements User {
 
   verified: boolean;
 
-  validado: boolean;
+  validado?: boolean;
 
   ultimo_acesso?: string ;
 
   provedor?: string;
+
+  category?: string;
 
   dadosPessoais: {
     nome: string;

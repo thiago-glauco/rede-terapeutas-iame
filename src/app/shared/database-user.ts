@@ -7,6 +7,8 @@ export interface DatabaseUser {
 
   name?: string;
 
+  category: string;
+
   mobile?: string;
 
   uid: string;
