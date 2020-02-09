@@ -31,6 +31,7 @@ export class UserService {
           console.log(user);
           that.createUser(user);
         }
+        console.log("Subjecting user");
         that.userSubject.next(data);
         },
       error(err) {

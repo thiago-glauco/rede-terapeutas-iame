@@ -30,7 +30,9 @@ export class RegisterComponent implements OnInit {
   dadosPessoais = {};
 
   constructor(private authService: AuthenticationService,
-    private userService: UserService) { }
+    private userService: UserService) { 
+      this.userDataObservable = this.userService.getDatabaseUser();
+    }
 
   ngOnInit() {
     let that = this;
@@ -44,9 +46,14 @@ export class RegisterComponent implements OnInit {
         email: this.registeredUser.email,
         verified: this.registeredUser.emailVerified,
         category: "terapeuta"});
-      this.userDataObservable = this.userService.getDatabaseUser();
+      
       this.userDataObservable.subscribe( {
-        next(data){ that.loginUser = data;  }
+        next(data){
+          that.authUserToDatabaseUser(data);
+          console.log("database: ");
+          console.log(data) 
+        },
+        error(err){console.log(err)}
       })
     } else {
       this.loggedUser = false;
@@ -148,13 +155,13 @@ export class RegisterComponent implements OnInit {
   }
 
   private authUserToDatabaseUser( authUser: firebase.User ) {
-      this.loginUser.email = authUser.email;
+      this.loginUser.email = authUser.email || '';
 
-      this.loginUser.verified = authUser.emailVerified
+      this.loginUser.verified = authUser.emailVerified|| '';
 
-      this.loginUser.ultimo_acesso = authUser.metadata.lastSignInTime;
+      this.loginUser.ultimo_acesso = authUser.metadata.lastSignInTime || '';
 
-      this.loginUser.provedor = authUser.providerId;
+      this.loginUser.provedor = authUser.providerId || '';
 
       this.loginUser.category = "terapeuta";
   }
