@@ -4,9 +4,9 @@
     <p>Após definir um usuário e senha as suas informações serão salvas em segurança e você poderá retomar o cadastro caso tenha que interromper o processo.</p>
     
     <mat-vertical-stepper linear #stepper>
-      
-    <mat-step [completed]='loggedUser' label="registro">
-    <form class="formRegister" fxLayout="column" #registerForm="ngForm" >
+      <!--[completed]='loggedUser'-->
+    <mat-step  label="registro">
+    <form class="registerForm" fxLayout="column" #registerForm="ngForm" >
     <!--<mat-form-field fxFlex>
       <input matInput type="text" placeholder="Name" name="userName" [(ngModel)]="loginUser.name" 
         required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #userName="ngModel">
@@ -55,7 +55,7 @@
       </button>
     </div>
     <mat-divider></mat-divider>
-    <button fxFlex flxAlign="center" mat-raised-button [disabled]="!formRegister.valid" [fxHide]="loggedUser"  (click)="createUser()" [attr.aria-label]="'Registrar'">
+    <button fxFlex flxAlign="center" mat-raised-button [disabled]="!registerForm.valid" [fxHide]="loggedUser"  (click)="createUser()" [attr.aria-label]="'Registrar'">
       <mat-icon></mat-icon> Registrar
     </button>
     <button fxFlex flxAlign="center" [fxHide]="loggedUser" mat-raised-button (click)="createGoogleUser()" [attr.aria-label]="'Registre-se via Google'">
@@ -64,35 +64,60 @@
     <button fxFlex flxAlign="center" [fxHide]="!loggedUser"  mat-raised-button (click)="logout()" [attr.aria-label]="'Logout'">
       <mat-icon>account_box</mat-icon> Sair
     </button>
-    <button fxFlex mat-button matStepperNext>Next</button>
+    <button fxFlex mat-button matStepperNext [disabled]="!registerForm.valid">Próximo <mat-icon>chevron_right</mat-icon></button>
     </form>
   </mat-step>
-  <mat-step label="dados pessoais">
+
+  <mat-step label="dados pessoais" [completed]="dataForm.valid">
     <p>Agora precisamos coletar algumas informações pessoais.</p>
-    <form class="form-dados-pessoais" fxLayout="column" #registerForm="ngForm" >
-    <mat-form-field fxFlex>
-      <input matInput type="text" placeholder="ex: Jorge Luiz da Silva" name="nome" [(ngModel)]="dadosPessoais.nome" required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #nome="ngModel">
-      <mat-error *ngIf="nome.touched && nome.invalid">
-          Por favor, informe seu nome completo.
-      </mat-error>
-    </mat-form-field>
+    <form class="form-dados-pessoais" fxLayout="column" #dataForm="ngForm" >
+
       <mat-form-field fxFlex>
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" placeholder="ex: Jorge Luiz da Silva" name="nome" [(ngModel)]="dadosPessoais.nome" required minLength="4" maxlength="80" pattern="^[\wÀ-ú]+(\s[\wÀ-ú]+){1,10}" #nome="ngModel">
+        <mat-error *ngIf="nome.touched && nome.invalid">
+            Por favor, informe seu nome completo.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Idade</mat-label>
         <input matInput 
         type="text" placeholder="ex: 40" name="idade" required
         [(ngModel)]="dadosPessoais.idade" #idade="ngModel"  pattern="^[\d]{1,2}" >
-        <mat-error *ngIf="idade.touched && idade.invalid">
-          Por favor, informe sua idade apenas com dígitos.
-      </mat-error>
+         <mat-error *ngIf="idade.touched && idade.invalid">
+            Por favor, informe sua idade apenas com dígitos.
+         </mat-error>
       </mat-form-field>
+
     <mat-form-field>
+      <mat-label>RG:</mat-label>
       <input matInput 
         type='text' required placeholder="Ex: 121739723" name="rg"
         [(ngModel)]="dadosPessoais.rg" minlength="6" maxlength="15" #rg="ngModel">
+        <mat-error *ngIf="rg.touched && rg.invalid">
+            Por favor, informe um RG válido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+      <mat-label>CPF:</mat-label>
+      <input matInput 
+        type='text' required placeholder="Ex: 121739723" name="cpf"
+        [(ngModel)]="dadosPessoais.cpf" minlength="6" maxlength="15" #cpf="ngModel">
+        <mat-error *ngIf="cpf.touched && cpf.invalid">
+            Por favor, informe um CPF válido.
+        </mat-error>
       </mat-form-field>
     </form>
+    <button fxFlex matStepperPrevious  mat-raised-button [attr.aria-label]="'Voltar'">
+      <mat-icon>chevron_left</mat-icon> voltar
+    </button>
+    <button fxFlex mat-button matStepperNext [disabled]="!dataForm.valid" [attr.aria-label]="'Próximo'" (click)="savePersonalData()">Próximo <mat-icon>chevron_right</mat-icon></button>
   </mat-step>
+
   <mat-step>
-    <form class="form-dados-contato" fxLayout="column" #registerForm="ngForm" >
+    <form class="form-dados-contato" fxLayout="column" #contatForm="ngForm" >
     <mat-form-field fxFlex>
       <input matInput 
         type='text' required placeholder="Ex: 11 99123456" name="celular"
@@ -107,6 +132,7 @@
           Informe um email válido.
       </mat-error>
     </mat-form-field>
+
     </form>
     </mat-step>
   

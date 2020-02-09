@@ -56,7 +56,9 @@ export class RegisterComponent implements OnInit {
         next(data){
           that.initializeUserData(data);
           console.log("database: ");
-          console.log(data) 
+          console.log(data) ;
+          that.userData = data;
+          console.log(that.userData);
         },
         error(err){console.log(err)}
       })
@@ -171,6 +173,12 @@ export class RegisterComponent implements OnInit {
       this.loginUser.provedor = authUser.providerId || '';
 
       this.loginUser.category = "terapeuta";
+  }
+
+  private savePersonalData( ) {
+    this.userData.dadosPessoais = this.dadosPessoais;
+    this.userData.dadosContato = this.dadosContato;
+    this.userService.updateUserData( this.userData );
   }
 }
 
