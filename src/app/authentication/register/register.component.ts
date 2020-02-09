@@ -31,22 +31,25 @@ export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
     private userService: UserService) { 
-      
+    
     }
 
   ngOnInit() {
     this.userDataObservable = this.userService.getDatabaseUser();
     let that = this;
+    
     if( this.authService.hasLoggedUser() ) {
       this.registeredUser = this.authService.getCurrentUser();
+      this.userDataObservable = this.userService.getDatabaseUser();
+      this.userService.userExist(this.registeredUser);
       this.loggedUser = true;
       this.verifiedUser = this.registeredUser.emailVerified;
 
       //1*Obter os dados no banco de dados ou criar usuário em caso de falha anterior:
-      this.userService.userExist({uid: this.registeredUser.uid,
+      /*this.userService.userExist({uid: this.registeredUser.uid,
         email: this.registeredUser.email,
         verified: this.registeredUser.emailVerified,
-        category: "terapeuta"});
+        category: "terapeuta"});*/
       
       this.userDataObservable.subscribe( {
         next(data){
