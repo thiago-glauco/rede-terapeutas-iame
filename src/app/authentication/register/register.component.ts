@@ -31,10 +31,11 @@ export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
     private userService: UserService) { 
-      this.userDataObservable = this.userService.getDatabaseUser();
+      
     }
 
   ngOnInit() {
+    this.userDataObservable = this.userService.getDatabaseUser();
     let that = this;
     if( this.authService.hasLoggedUser() ) {
       this.registeredUser = this.authService.getCurrentUser();
@@ -49,7 +50,7 @@ export class RegisterComponent implements OnInit {
       
       this.userDataObservable.subscribe( {
         next(data){
-          that.authUserToDatabaseUser(data);
+          that.initializeUserData(data);
           console.log("database: ");
           console.log(data) 
         },
@@ -130,6 +131,7 @@ export class RegisterComponent implements OnInit {
       next( data ) {
         console.log(data);
         that.loggedUser = false;
+        that.initializeUserData();
       },
       error(err) {
         console.log(err);
@@ -154,12 +156,10 @@ export class RegisterComponent implements OnInit {
       this.userService.createUser(userData);
   }
 
-  private authUserToDatabaseUser( authUser: firebase.User ) {
+  private initializeUserData( authUser?: firebase.User ) {
       this.loginUser.email = authUser.email || '';
 
-      this.loginUser.verified = authUser.emailVerified|| '';
-
-      this.loginUser.ultimo_acesso = authUser.metadata.lastSignInTime || '';
+      this.loginUser.verified = authUser.emailVerified || '';
 
       this.loginUser.provedor = authUser.providerId || '';
 
