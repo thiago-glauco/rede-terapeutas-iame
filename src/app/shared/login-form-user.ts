@@ -19,9 +19,7 @@ export class LoginFormUser implements User {
 
   dadosPessoais: {
     nome: string;
-    celular: string;
     idade: string;
-    email: string;
     rg: string;
     cpf: string;
   }
