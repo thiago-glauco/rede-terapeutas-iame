@@ -119,6 +119,7 @@
   <mat-step>
     <form class="form-dados-contato" fxLayout="column" #contatForm="ngForm" >
     <mat-form-field fxFlex>
+      <mat-label>Informe um telefone para contato</mat-label>
       <input matInput 
         type='text' required placeholder="Ex: 11 99123456" name="celular"
         [(ngModel)]="dadosContato.celular" minlength="6" maxlength="15" #celular="ngModel">

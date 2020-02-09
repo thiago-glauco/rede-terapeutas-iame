@@ -58,6 +58,8 @@ export class RegisterComponent implements OnInit {
           console.log("database: ");
           console.log(data) ;
           that.userData = data;
+          that.dadosPessoais = that.userData.dadosPessoais;
+          that.dadosContato = that.userData.dadosContato;
           console.log(that.userData);
         },
         error(err){console.log(err)}
