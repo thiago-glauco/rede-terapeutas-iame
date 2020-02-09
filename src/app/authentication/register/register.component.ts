@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
   userData: DatabaseUser;
   userDataObservable: Observable<DatabaseUser>;
   dadosPessoais = {};
+  dadosContato = {};
 
   constructor(private authService: AuthenticationService,
     private userService: UserService) { 
