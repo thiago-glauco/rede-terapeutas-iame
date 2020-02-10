@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
   dadosPessoais = {};
   dadosContato = {};
   dadosProfissionais = {};
+  dadosAdicionais = {};
 
   constructor(private authService: AuthenticationService,
     private userService: UserService) { 

@@ -3,7 +3,7 @@
     <p>Se você tiver uma conta google, pode utiliza-la para realizar seu registro, em vez de cadastrar um novo usuário e senha</p>
     <p>Após definir um usuário e senha as suas informações serão salvas em segurança e você poderá retomar o cadastro caso tenha que interromper o processo.</p>
     
-  <mat-vertical-stepper linear #stepper>
+  <mat-horizontal-stepper linear #stepper>
       <!--[completed]='loggedUser'-->
     <mat-step  label="Registro">
       <form class="registerForm" fxLayout="column" #registerForm="ngForm" >
@@ -171,4 +171,30 @@
         </mat-form-field>
       </form>
     </mat-step>
-  </mat-vertical-stepper>
+    <mat-step label="Informações Adicionais">
+      <form class="form-dados-contato" fxLayout="column" #adicionaisForm="ngForm" >
+        <mat-form-field fxFlex>
+          <p>Atualmente você está atuando ou participando de algum orgão/grupo que possa supervisionar ou auxilizar com o trabalho a ser realizado com as mães especiais?</p>
+          <input matInput type="text"  name="grupos" [(ngModel)]="dadosAdicionais.grupos"  #grupos="ngModel">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Seu trabalho se encaixa em qual categoria?</mat-label>
+          <select matNativeControl required [(value)]="dadosAdicionais.atividade" >
+            <option value="Psicoterapia">Psicoterapia</option>
+            <option value="CoachCarreira">Coach de carreira</option>
+            <option value="CoachFamília">Coach de Família</option>
+            <option value="TerapiasAlternativas">Terapias Alternativas</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Em caso de terapia alternativa, contenos um pouco de seu trabalho.</mat-label>
+          <textarea matInput type="text" row="10" col="100" maxLength="1000"  name="terapiaAlternativa" [(ngModel)]="dadosAdicionais.terapiaAlternativa"  #terapiaAlternativa="ngModel"></textarea>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Quantas sessões você julga necessárias para um tratamento?</mat-label>
+          <input matInput type="number"  name="numSessoes" [(ngModel)]="dadosAdicionais.numSessoes"  #crp="ngModel">
+        </mat-form-field>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
